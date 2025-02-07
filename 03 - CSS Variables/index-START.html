@@ -22,6 +22,22 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    :root {
+      --base-color: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+
+    img {
+      padding: var(--spacing);
+      background-color: var(--base-color);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--base-color);
+    }
 
     /*
       misc styles, nothing to do with CSS variables
@@ -46,6 +62,27 @@
   </style>
 
   <script>
+    function changeSpacing(e) {
+      console.log(this.value);
+      document.documentElement.style.setProperty('--spacing', `${this.value}px`)
+    }
+
+    function changeBlur(e) {
+      console.log(this.value);
+      document.documentElement.style.setProperty('--blur', `${this.value}px`)
+    }
+
+    function changeColor(e) {
+      console.log(this.value);
+      document.documentElement.style.setProperty('--base-color', `${this.value}`)
+    }
+
+    const spacingInput = document.querySelector('input[name="spacing"]');
+    const blurInput = document.querySelector('input[name="blur"]');
+    const colorInput = document.querySelector('input[name="base"]');
+    spacingInput.addEventListener('input', changeSpacing)
+    blurInput.addEventListener('input', changeBlur)
+    colorInput.addEventListener('input', changeColor)
   </script>
 
 </body>
