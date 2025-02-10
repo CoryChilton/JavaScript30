@@ -38,17 +38,29 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const inventors2 = inventors.filter(i => i.year >= 1500 && i.year < 1600);
+    console.table(inventors2);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const firstLast = inventors.map(i => `${i.first} ${i.last}`)
+    console.log(firstLast)
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    inventors.sort((i1, i2) => i1.year - i2.year)
+    console.table(inventors)
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    const totalYears = inventors.reduce((total, inventor) => {
+      return inventor.passed - inventor.year + total
+    }, 0);
+    console.log(totalYears)
 
     // 5. Sort the inventors by years lived
+    inventors.sort((i1, i2) => (i2.passed - i2.year) - (i1.passed - i1.year))
+    console.table(inventors);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
@@ -56,10 +68,29 @@
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    people.sort((p1, p2) => {
+      const p1LastEnd = p1.indexOf(',');
+      const p1Last = p1.substring(0, p1LastEnd)
+      const p2LastEnd = p2.indexOf(',');
+      const p2Last = p2.substring(0, p2LastEnd)
+      if (p1Last <= p2Last) {return -1}
+      else {return 1}
+    });
+    console.log(people);
+
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const vehicleCounts = data.reduce((accumulator, currentValue) => {
+      if (accumulator.hasOwnProperty(currentValue)) {
+        accumulator[currentValue] += 1;
+      } else {
+        accumulator[currentValue] = 1;
+      }
+      return accumulator
+    }, {})
+    console.table(vehicleCounts);
 
   </script>
 </body>
