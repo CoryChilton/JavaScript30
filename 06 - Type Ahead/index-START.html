@@ -17,6 +17,54 @@
   </form>
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+let cities = []
+
+fetch(endpoint, {
+  method: 'GET'
+})
+.then(response => response.json())
+.then(data => {
+  console.log(data);
+  cities = data;
+})
+.catch(error => console.error('Error', error))
+
+const search = document.querySelector('input.search');
+const suggestions = document.querySelector('ul.suggestions');
+
+function displaySearchedPlaces(e) {
+  console.log(this.value);
+  if (cities.length === 0) {
+    console.error('cities not loaded yet');
+    return;
+  }
+  if (this.value === '') {
+    console.log('hia')
+    suggestions.innerHTML = `
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    `
+    return;
+  }
+  let filteredCities = cities.filter(c => c.city.toLowerCase().includes(this.value.toLowerCase()) || c.state.toLowerCase().includes(this.value.toLowerCase()));
+  filteredCities = filteredCities.sort((c1, c2) => parseInt(c1.population) < parseInt(c2.population) ? 1 : -1);
+  suggestions.innerHTML = '';
+  filteredCities.forEach((city) => {
+    const li = document.createElement('li');
+    const cityDiv = document.createElement('div');
+    cityDiv.textContent = `${city.city}, ${city.state}`;
+    const populationDiv = document.createElement('div');
+    populationDiv.textContent = parseInt(city.population).toLocaleString();
+    populationDiv.classList.add('population');
+    li.appendChild(cityDiv);
+    li.appendChild(populationDiv);
+    suggestions.appendChild(li);
+  })
+}
+
+
+search.addEventListener('input', displaySearchedPlaces)
+
 
 </script>
 </body>
