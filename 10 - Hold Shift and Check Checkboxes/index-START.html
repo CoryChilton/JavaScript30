@@ -97,6 +97,45 @@
   </div>
 
 <script>
+  let lastCheckedIndex = null;
+  let shiftDown = false;
+  const inputs = Array.from(document.querySelectorAll('input'));
+  console.log(inputs);
+
+  function checkBoxes(e) {
+    console.log(e);
+    const idx = inputs.findIndex((input => input === this));
+    if (shiftDown && lastCheckedIndex != null) {
+      for (let i = lastCheckedIndex + 1; i <= idx; i ++) {
+        inputs[i].checked = true;
+      }
+      for (let i = idx; i < lastCheckedIndex; i++) {
+        inputs[i].checked = true;
+      }
+    }
+    lastCheckedIndex = idx;
+  }
+
+  function setShiftDownTrue(e) {
+    if (e.keyCode === 16) {
+      console.log('shift down');
+      shiftDown = true;
+    }
+  }
+
+  function setShiftDownFalse(e) {
+    if (e.keyCode === 16) {
+      console.log('shift up');
+      shiftDown = false;
+    }
+  }
+
+  inputs.forEach(input => {
+    input.addEventListener('click', checkBoxes);
+  });
+  document.addEventListener('keydown', setShiftDownTrue);
+  document.addEventListener('keyup', setShiftDownFalse);
+
 </script>
 </body>
 </html>
