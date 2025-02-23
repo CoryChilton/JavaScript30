@@ -9,6 +9,11 @@
 
   <script>
     // start with strings, numbers and booleans
+    let age = 100;
+    let age2 = age;
+    console.log(age, age2);
+    age = 200;
+    console.log(age, age2);
 
     // Let's say we have an array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
@@ -32,6 +37,7 @@
     // or create a new array and concat the old one in
 
     // or use the new ES6 Spread
+    const team = [...players];
 
     // now when we update it, the original one isn't changed
 
@@ -46,8 +52,10 @@
     // and think we make a copy:
 
     // how do we take a copy instead?
+    const cap2 = Object.assign({}, person, {number: 99, height: 6});
 
     // We will hopefully soon see the object ...spread
+    const cap3 = {...person}
 
     // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
 
